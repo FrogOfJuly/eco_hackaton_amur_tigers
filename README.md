@@ -3,7 +3,7 @@ Repository for eco hackaton in USA embassadory
 what is done in the end of day 1:
 1) Idea
 2) Models to tag photos
-3) Frontend draft
+3) Frontend [draft]("https://www.figma.com/file/Ay2xq6qAx13N6XTn7dDV1u/Material-Baseline-Design-Kit-FOR-ZOOHACK-(Copy)?node-id=0%3A10")
 # Descritption:
 
 The idea is as simple as that:
