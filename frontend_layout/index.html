@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <title>Eye of the tiger</title>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.3/dist/teachablemachine-image.min.js"></script>
+        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="./loader.css">
+    </head>
+    <body>
+        
+        <div class="mainImage">
+            <div class="mainImage__btns">
+                <button onclick="isTigersInit()">isTigers</button>
+                <button onclick="isCubeInit()">isCube</button>
+                <button onclick="isWoundedInit()">isWounded</button>
+            </div>
+            <img src="./images/4(1).jpg" alt="">
+            <div id="list"></div>
+        </div>
+        
+        
+        <div class="loader" id="loader">
+            <div class="loader_inner"></div>
+        </div>
+
+    <script>
+        const imgPath = './images/4.jpg'
+        const isTigerModel = "https://teachablemachine.withgoogle.com/models/hsywcwjX/"
+        const isCubeModel = 'https://teachablemachine.withgoogle.com/models/aF9sVXFT/'
+        const isWounded = 'https://teachablemachine.withgoogle.com/models/m7Oukwis/'
+        
+
+        async function isTigersInit() {
+            loader.style.display = 'block'
+            const modelURL = isTigerModel + "model.json"
+            const metadataURL = isTigerModel + "metadata.json"
+            const model = await tmImage.load(modelURL, metadataURL);
+            const maxPredictions = model.getTotalClasses();
+
+            let image = new Image()
+            image.src = imgPath
+            const result = await model.predictTopK(image, maxPredictions)
+            showResult(result)
+            loader.style.display = 'none'
+            return result 
+        }
+        async function isCubeInit() {
+            loader.style.display = 'block'
+            const modelURL = isCubeModel + "model.json"
+            const metadataURL = isCubeModel + "metadata.json"
+            const model = await tmImage.load(modelURL, metadataURL);
+            const maxPredictions = model.getTotalClasses();
+
+            let image = new Image()
+            image.src = imgPath
+            const result = await model.predictTopK(image, maxPredictions)
+            showResult(result)
+            loader.style.display = 'none'
+            return result 
+        }
+        async function isWoundedInit() {
+            loader.style.display = 'block'
+            const modelURL = isWounded + "model.json"
+            const metadataURL = isWounded + "metadata.json"
+            const model = await tmImage.load(modelURL, metadataURL);
+            const maxPredictions = model.getTotalClasses();
+
+            let image = new Image()
+            image.src = imgPath
+            const result = await model.predictTopK(image, maxPredictions)
+            showResult(result)
+            loader.style.display = 'none'
+            return result 
+        }
+        
+        const list = document.getElementById('list')
+        function showResult(data, renderImage) {
+            if(renderImage) {
+                let imgContainer = document.createElement('img')
+                imgContainer.src = imgPath
+                list.appendChild(imgContainer)
+            }
+            data.map(res => {
+                let parent = document.createElement('span')
+                parent.setAttribute('class', 'output')
+                parent.innerHTML = `Класс : ${res.className}, Процент: ${res.probability}`
+                list.appendChild(parent)    
+            })
+            loader.style.display = 'none'
+        }
+        
+    </script>
+    </body>
+</html>
